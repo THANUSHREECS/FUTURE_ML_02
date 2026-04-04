@@ -1,157 +1,122 @@
 # FUTURE_ML_02
 Support Ticket Classification &amp; Prioritization using Machine Learning
 
-## 1. Introduction
+# Introduction
+In modern organizations, customer support teams receive a large number of support tickets daily in the form of emails, forms, and issue reports. Managing these tickets manually is time-consuming and inefficient.
 
-In modern organizations, customer support teams handle a large number of tickets daily, including complaints, queries, and issue reports. Managing these tickets manually leads to inefficiencies such as delayed responses, incorrect categorization, and poor customer satisfaction.
+This project aims to automate the process of **support ticket classification and prioritization** using Machine Learning techniques. The system reads ticket text, classifies it into appropriate categories, and assigns a priority level to improve response time and operational efficiency.
 
-This project aims to solve these challenges by developing a Machine Learning-based system that can automatically classify support tickets and assign priority levels based on their content.
-
-## 2. Objectives
-
+# Objective
 The main objectives of this project are:
+* To classify support tickets into categories such as **Hardware, Access, HR Support, Storage**, etc.
+* To predict the **priority level** of each ticket (High, Medium, Low)
+* To reduce manual effort in sorting tickets
+* To improve response time for critical issues
 
-* To preprocess and clean textual ticket data
-* To convert text data into numerical features using TF-IDF
-* To build classification models for:
+# Dataset Description
+The dataset used in this project contains support ticket information with the following fields:
+* **Text (Document):** Description of the issue reported by the user
+* **Category (Topic_group):** Type of issue (e.g., Hardware, Access)
+* **Priority:** Urgency level of the issue (High, Medium, Low)
+The dataset represents real-world support scenarios, making it suitable for building practical machine learning models.
 
-  * Ticket Category
-  * Ticket Priority
-* To evaluate model performance using standard metrics
-* To demonstrate real-world business impact
+# Methodology
+The project follows a structured machine learning pipeline:
 
-## 3. Dataset Description
+## Data Preprocessing
+* Removed missing values
+* Converted text to lowercase
+* Removed punctuation and numbers
+* Removed stopwords (e.g., “the”, “is”)
+* Applied lemmatization to reduce words to base form
 
-The dataset consists of customer support ticket information with the following key columns:
+## Feature Extraction
+Text data was converted into numerical format using:
+* **TF-IDF (Term Frequency-Inverse Document Frequency)**
+* Used **n-grams (1 to 3)** to capture context
 
-* Ticket Subject
-* Ticket Description
-* Ticket Type (Category)
-* Ticket Priority
-* Additional fields such as customer details, timestamps, and resolution
+## Model Building
+Two separate models were trained:
 
-For this project:
-
-* Input Features: Ticket Subject + Ticket Description
-* Target Variables:
-
-  * Ticket Type (Category Classification)
-  * Ticket Priority (Priority Prediction)
-    
-## 4. Methodology
-
-### 4.1 Data Preprocessing
-
-Text data is cleaned using Natural Language Processing (NLP) techniques:
-
-* Lowercasing all text
-* Removing punctuation and special characters
-* Removing stopwords (common words like “the”, “is”)
-* Tokenization (splitting text into words)
-
-Additionally, Ticket Subject and Ticket Description are combined to capture more context.
-
-### 4.2 Feature Extraction
-
-We use **TF-IDF (Term Frequency - Inverse Document Frequency)** to convert text into numerical form.
-
-* Assigns importance to meaningful words
-* Reduces the impact of common words
-* Helps machine learning models understand text
-
-### 4.3 Model Building
-
-Two separate models are trained:
-
-#### 1. Category Classification Model
-
-* Input: Cleaned ticket text
-* Output: Ticket Type (e.g., Technical, Billing, Account)
-* Algorithm Used: Logistic Regression
-
-#### 2. Priority Prediction Model
-
-* Input: Same ticket text
-* Output: Ticket Priority (High, Medium, Low)
-* Algorithm Used: Logistic Regression
+### Category Model
+* Algorithm: **Linear Support Vector Classifier (LinearSVC)**
+* Purpose: Predict ticket category
   
-## 5. Model Evaluation
+### Priority Model
+* Algorithm: **LinearSVC**
+* Purpose: Predict urgency level
 
-The models are evaluated using the following metrics:
+## Train-Test Split
+* Dataset split into:
+  * **80% Training**
+  * **20% Testing**
+* Used **stratified sampling** to maintain class balance
 
-* **Accuracy**: Overall correctness of the model
-* **Precision**: How many predicted values are correct
-* **Recall**: How many actual values are captured
-* **F1-Score**: Balance between precision and recall
+## Evaluation Metrics
+Models were evaluated using:
+* Accuracy
+* Precision
+* Recall
+* F1-score
+* Confusion Matrix
 
-### Confusion Matrix (Bonus)
+# Results
 
-* Displays correct and incorrect predictions
-* Helps identify where the model makes mistakes
+## Category Model
+* Achieved good accuracy (~80–85%)
+* Correctly classified most tickets
+* Some misclassification due to overlapping vocabulary
 
-## 6. Results and Insights
+## Priority Model
 
-* Text preprocessing significantly improves model performance
-* TF-IDF effectively captures important keywords
-* Logistic Regression provides good performance for text classification
-* Combining subject and description improves prediction accuracy
+* Successfully predicted urgency levels
+* Balanced performance across High, Medium, and Low classes
+* Demonstrated strong classification capability
 
-Typical accuracy ranges between **85%–90%**, depending on the dataset.
+# Explainability
 
-## 7. Final System
+The model’s decision-making was analyzed by extracting **top important words** for each category.
+Examples:
+* Hardware → laptop, system, device
+* Access → login, password, account
+This helps in understanding how the model makes predictions.
 
-The system works as follows:
+# Real-World Applications
 
-1. User inputs a ticket
-2. Text is cleaned and processed
-3. Converted into numerical features using TF-IDF
-4. Two models predict:
+This system can be used in:
+* Customer support platforms
+* IT helpdesk systems
+* SaaS companies
+* Enterprise ticketing systems
 
-   * Ticket Category
-   * Ticket Priority
+# Limitations
+* TF-IDF does not capture deep context
+* Some tickets are ambiguous
+* Model performance depends on dataset quality
 
-### Example:
 
-Input:
-"My account is locked, please fix this immediately"
+# Conclusion
+This project demonstrates how Machine Learning can automate support ticket classification and prioritization. By using NLP techniques and classification models, the system improves efficiency, reduces workload, and enhances customer support operations.
 
-Output:
 
-* Category: Account Issue
-* Priority: High
 
-## 8. Business Impact
 
-This system provides significant value to organizations:
 
-### For Support Teams:
 
-* Reduces manual workload
-* Automatically categorizes tickets
 
-### For Managers:
 
-* Identifies urgent issues quickly
-* Improves response time
 
-### For Companies:
 
-* Enhances customer satisfaction
-* Improves operational efficiency
 
-## 9. Tools and Technologies Used
 
-* Python
-* Pandas & NumPy
-* NLTK (Natural Language Processing)
-* Scikit-learn
-* TF-IDF Vectorizer
-* Logistic Regression
 
-## 10. Conclusion
 
-This project demonstrates the practical application of Machine Learning in real-world business scenarios. By automating ticket classification and prioritization, the system improves efficiency, reduces response time, and enhances customer satisfaction.
 
-It highlights how NLP and ML can be effectively used to solve operational challenges in support systems.
+
+
+
+
+
+
 
 
